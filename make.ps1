@@ -41,7 +41,7 @@ function preBuild{
 
         # Set NUSPEC VERSION
         Get-Content $basePath\templates\$projectName.nuspec.template  -ErrorAction stop |
-        Foreach-Object {$_ -replace "{VERSION}", "$buildVersion"} |         
+        Foreach-Object {$_ -replace "{VERSION}", "$fullBuildVersion"} |         
         Set-Content $basePath\$projectName.nuspec   
     }
     Catch{
@@ -104,7 +104,7 @@ function nugetPack{
 function zipOutput{
     # ZIPPING
     write-host "Zipping" -foregroundcolor:blue
-    $outputName = $projectName+"_V"+$buildVersion+"_BUILD.zip"
+    $outputName = $projectName+"_V"+$fullBuildVersion+"_BUILD.zip"
     zip a -tzip .\releases\$outputName -r .\BuildOutput\*.* > $logPath\LogZipping.log    
     if($? -eq $False){
         Write-host "Zipping FAILED!"  -foregroundcolor:red

@@ -4,7 +4,7 @@
     <id>logsort</id>
     
     <!-- Managed as part of build process. -->
-    <version>0.1.4</version>
+    <version>0.1.5.0</version>
     
     <title>logsort</title>
     <authors>Gary Kenneally (@SecretDeveloper)</authors>
@@ -15,6 +15,8 @@
     <description>Simple log file sorting utility.  It will scan and combine log files using a configurable regex key.</description>    
     <copyright>Copyright 2015</copyright>
     <tags>log sort combine text</tags>
+
+     <dependencies></dependencies>
   </metadata>
   <files>
     <file src="BuildOutput\**\*.*" />
