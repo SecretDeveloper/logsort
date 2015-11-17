@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>logsort</id>
+    
+    <!-- Managed as part of build process. -->
+    <version>{VERSION}</version>
+    
+    <title>logsort</title>
+    <authors>Gary Kenneally (@SecretDeveloper)</authors>
+    <owners>Gary Kenneally (@SecretDeveloper)</owners>
+    <licenseUrl>https://github.com/SecretDeveloper/logsort/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SecretDeveloper/logsort/</projectUrl>    
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple log file sorting utility.  It will scan and combine log files using a configurable regex key.</description>    
+    <copyright>Copyright 2015</copyright>
+    <tags>log sort combine text</tags>
+  </metadata>
+  <files>
+    <file src="BuildOutput\**\*.*" />
+  </files>
+</package>

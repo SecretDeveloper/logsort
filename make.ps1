@@ -38,6 +38,11 @@ function preBuild{
         Foreach-Object {$_ -replace "//{VERSION}", "[assembly: AssemblyVersion(""$buildVersion"")]"} | 
         Foreach-Object {$_ -replace "//{FILEVERSION}", "[assembly: AssemblyFileVersion(""$buildVersion"")]"} | 
         Set-Content $basePath\src\$projectName\Properties\AssemblyInfo.cs         
+
+        # Set NUSPEC VERSION
+        Get-Content $basePath\templates\$projectName.nuspec.template  -ErrorAction stop |
+        Foreach-Object {$_ -replace "{VERSION}", "$buildVersion"} |         
+        Set-Content $basePath\$projectName.nuspec   
     }
     Catch{
         Write-host "PREBUILD FAILED!" -foregroundcolor:red
@@ -89,7 +94,7 @@ function nugetPublish{
 function nugetPack{
     # Packing
     write-host "Packing" -foregroundcolor:blue
-    nuget pack .\src\$projectName\$projectName.csproj -OutputDirectory .\releases > $logPath\LogPacking.log     
+    nuget pack .\$projectName.nuspec -OutputDirectory .\releases > $logPath\LogPacking.log     
     if($? -eq $False){
         Write-host "PACK FAILED!"  -foregroundcolor:red
         exit
