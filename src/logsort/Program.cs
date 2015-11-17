@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using CliParse;
@@ -13,25 +14,25 @@ namespace logsort
         [CliParse.ParsableClass("Sort Config")]
         public class SortConfig:CliParse.Parsable
         {
-            [CliParse.ParsableArgument("path", ShortName = 'p', ImpliedPosition = 0, Required = true)]
+            [CliParse.ParsableArgument("path", ShortName = 'p', ImpliedPosition = 0, Required = true, Description = "The path to scan for log files.")]
             public string Path { get; set; }
 
-            [CliParse.ParsableArgument("match", ShortName = 'm', DefaultValue = ".*")]
+            [CliParse.ParsableArgument("match", ShortName = 'm', DefaultValue = ".*", Description = "Regex used to filter filenames, only those which match are included.")]
             public string InputFileMatch { get; set; }
 
-            [CliParse.ParsableArgument("keymatch", ShortName = 'k', DefaultValue = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}")]
+            [CliParse.ParsableArgument("keymatch", ShortName = 'k', DefaultValue = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}", Description = "The regex used to find the log entry identifier.  The default is a datetime at the start of a line.")]
             public string KeyMatch { get; set; }
 
-            [CliParse.ParsableArgument("prefix", ShortName = 'f', DefaultValue = "")]
+            [CliParse.ParsableArgument("prefix", ShortName = 'f', DefaultValue = "", Description = "A prefix to prepend at the start of each log entry in the resulting output.")]
             public string EntryPrefix { get; set; }
 
-            [CliParse.ParsableArgument("entrymatch", ShortName = 'e', DefaultValue = "")]
+            [CliParse.ParsableArgument("entrymatch", ShortName = 'e', DefaultValue = "", Description = "A regex used to determine if a log entry should be included in the results.")]
             public string EntryMatch { get; set; }
 
-            [CliParse.ParsableArgument("entryinclude", ShortName = 'i', DefaultValue = "")]
+            [CliParse.ParsableArgument("entryinclude", ShortName = 'i', DefaultValue = "", Description = "A value which a log entry must contain in order to be included in the results.")]
             public string EntryIncludes { get; set; }
             
-            [CliParse.ParsableArgument("out", ShortName = 'o', DefaultValue = "")]
+            [CliParse.ParsableArgument("out", ShortName = 'o', DefaultValue = "", Description = "The file path to write the results to.")]
             public string OutputFile { get; set; }
 
             public bool ShouldAddEntry(string entry)
@@ -82,7 +83,7 @@ namespace logsort
                 var parseResult = sortConfig.CliParse(args);
                 if (!parseResult.Successful || parseResult.ShowHelp)
                 {
-                    Console.WriteLine(sortConfig.GetHelpInfo());
+                    Console.WriteLine(sortConfig.GetHelpInfoFromAssembly(Assembly.GetExecutingAssembly()));
                     return;
                 }
 
